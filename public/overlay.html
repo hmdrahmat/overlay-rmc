@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Overlay</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+    }
+    #notif {
+      position: absolute;
+      top: 30%;
+      width: 100%;
+      text-align: center;
+      font-size: 3em;
+      font-weight: bold;
+      color: yellow;
+      text-shadow: 2px 2px 4px #000;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="notif">💥 Donasi Masuk! 💥</div>
+
+  <script>
+    const ws = new WebSocket(`ws://${location.host}`);
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === "donate") {
+        const notif = document.getElementById("notif");
+        notif.textContent = data.message;
+        notif.style.display = "block";
+
+        setTimeout(() => {
+          notif.style.display = "none";
+        }, 5000);
+      }
+    };
+  </script>
+</body>
+</html>

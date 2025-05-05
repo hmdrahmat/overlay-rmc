@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+</head>
+<body>
+  <h1>Panel Kontrol</h1>
+  <input id="message" type="text" placeholder="Pesan notifikasi" value="💥 Donasi Masuk! 💥" />
+  <button onclick="send()">Kirim ke Overlay</button>
+
+  <script>
+    const ws = new WebSocket(`ws://${location.host}`);
+
+    function send() {
+      const msg = document.getElementById("message").value;
+      ws.send(JSON.stringify({ type: "donate", message: msg }));
+    }
+  </script>
+</body>
+</html>
